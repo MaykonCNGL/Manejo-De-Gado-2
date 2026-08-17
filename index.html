@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#245b32">
+
+<title>Manejo do Gado</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f3f6f2;
+    color:#17241a;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+.hidden{
+    display:none!important;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+.auth{
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:18px;
+    background:linear-gradient(
+        135deg,
+        #102c19,
+        #43804e
+    );
+}
+
+.box{
+    background:#fff;
+    border-radius:22px;
+    overflow:hidden;
+    width:min(430px,100%);
+    box-shadow:0 20px 60px #0005;
+}
+
+.cover{
+    height:190px;
+    padding:25px;
+    display:flex;
+    align-items:end;
+    color:#fff;
+
+    background:
+        linear-gradient(#0002,#0008),
+        linear-gradient(
+            135deg,
+            #9c6835,
+            #d8a151 48%,
+            #24552f
+        );
+}
+
+.cover h1{
+    margin:0;
+    font-size:29px;
+}
+
+.body{
+    padding:24px;
+}
+
+h2{
+    color:#245b32;
+    margin-top:0;
+}
+
+.field{
+    margin:10px 0;
+}
+
+.field label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d5ded6;
+    border-radius:10px;
+    font-size:16px;
+    background:#fff;
+}
+
+.btn{
+    width:100%;
+    padding:12px;
+    border:0;
+    border-radius:10px;
+    background:#245b32;
+    color:#fff;
+    font-weight:bold;
+    margin-top:8px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1b4727;
+}
+
+.link{
+    text-align:center;
+    margin-top:14px;
+    color:#245b32;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+header{
+    background:#245b32;
+    color:#fff;
+    padding:18px;
+    position:sticky;
+    top:0;
+    z-index:5;
+}
+
+header h1{
+    margin:0;
+    font-size:22px;
+}
+
+main{
+    max-width:1000px;
+    margin:auto;
+    padding:16px 16px 90px;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.card{
+    background:#fff;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:0 2px 10px #0001;
+}
+
+.metric span{
+    color:#687269;
+    font-size:13px;
+}
+
+.metric b{
+    display:block;
+    font-size:24px;
+    margin-top:5px;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:12px;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.action{
+    padding:12px;
+    border:0;
+    border-radius:10px;
+    background:#e8f0e9;
+    color:#245b32;
+    font-weight:bold;
+    text-align:left;
+    cursor:pointer;
+}
+
+.action:hover{
+    background:#dce9df;
+}
+
+
+/* =========================
+   FORMULÁRIOS
+========================= */
+
+.form{
+    display:grid;
+    gap:10px;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+
+/* =========================
+   TABELAS
+========================= */
+
+.tablewrap{
+    overflow-x:auto;
+}
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.table th,
+.table td{
+    text-align:left;
+    padding:10px;
+    border-bottom:1px solid #edf0ed;
+    font-size:14px;
+}
+
+.pill{
+    background:#e7f1e9;
+    color:#245b32;
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+
+/* =========================
+   MENU INFERIOR
+========================= */
+
+.bottom{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+
+    background:#fff;
+
+    border-top:1px solid #ddd;
+
+    display:flex;
+    justify-content:center;
+
+    gap:4px;
+
+    padding:8px;
+
+    z-index:6;
+}
+
+.bottom button{
+    border:0;
+    background:white;
+    padding:8px;
+    color:#526057;
+    cursor:pointer;
+}
+
+.bottom .on{
+    color:#245b32;
+    font-weight:bold;
+}
+
+
+/* =========================
+   CURRAIS
+========================= */
+
+.pen-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:10px;
+}
+
+.pen-card{
+    cursor:pointer;
+    border:2px solid transparent;
+}
+
+.pen-card:hover{
+    border-color:#245b32;
+}
+
+.pen-title{
+    font-size:19px;
+    font-weight:bold;
+    color:#245b32;
+}
+
+.pen-stats{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+
+.stat{
+    background:#f0f5f1;
+    border-radius:10px;
+    padding:9px;
+
+    flex:1;
+    min-width:90px;
+}
+
+.stat small{
+    display:block;
+    color:#687269;
+}
+
+.stat b{
+    display:block;
+    margin-top:3px;
+}
+
+.back{
+    background:#e8f0e9;
+    color:#245b32;
+
+    border:0;
+    border-radius:10px;
+
+    padding:10px 14px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    margin-bottom:12px;
+}
+
+.curral-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+.curral-head h2{
+    margin:0;
+}
+
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#687269;
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media(max-width:700px){
+
+    .cards{
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .grid{
+        grid-template-columns:
+            1fr;
+    }
+
+    .row{
+        grid-template-columns:
+            1fr;
+    }
+
+    .pen-grid{
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN / CADASTRO
+===================================================== -->
+
+<div
+    id="auth"
+    class="auth"
+>
+
+<div class="box">
+
+
+<div class="cover">
+
+<div>
+
+<h1>
+🐂 Manejo do Gado
+</h1>
+
+<div>
+Gestão inteligente da sua fazenda
+</div>
+
+</div>
+
+</div>
+
+
+<div class="body">
+
+
+<!-- LOGIN -->
+
+<div id="login">
+
+<h2>
+Bem-vindo!
+</h2>
+
+<p>
+Entre para acessar seu rebanho.
+</p>
+
+
+<div class="field">
+
+<label>
+Usuário
+</label>
+
+<input
+    id="lu"
+    type="text"
+    placeholder="Digite seu usuário"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Senha
+</label>
+
+<input
+    id="lp"
+    type="password"
+    placeholder="Digite sua senha"
+>
+
+</div>
+
+
+<button
+    class="btn"
+    onclick="login()"
+>
+ENTRAR
+</button>
+
+
+<div
+    class="link"
+    onclick="toggleAuth()"
+>
+Criar cadastro
+</div>
+
+</div>
+
+
+<!-- CADASTRO -->
+
+<div
+    id="register"
+    class="hidden"
+>
+
+<h2>
+Criar cadastro
+</h2>
+
+
+<div class="field">
+
+<label>
+Nome
+</label>
+
+<input
+    id="rn"
+    type="text"
+    placeholder="Seu nome"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Usuário
+</label>
+
+<input
+    id="ru"
+    type="text"
+    placeholder="Crie um usuário"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+E-mail
+</label>
+
+<input
+    id="re"
+    type="email"
+    placeholder="Seu e-mail"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Senha
+</label>
+
+<input
+    id="rp"
+    type="password"
+    placeholder="Crie uma senha"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Confirmar senha
+</label>
+
+<input
+    id="rp2"
+    type="password"
+    placeholder="Repita a senha"
+>
+
+</div>
+
+
+<button
+    class="btn"
+    onclick="register()"
+>
+CADASTRAR
+</button>
+
+
+<div
+    class="link"
+    onclick="toggleAuth()"
+>
+Voltar ao login
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     APLICATIVO
+===================================================== -->
+
+<div
+    id="app"
+    class="hidden"
+>
+
+
+<header>
+
+<h1>
+🐂 Manejo do Gado
+</h1>
+
+<small id="hello"></small>
+
+</header>
+
+
+<main>
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="dash">
+
+
+<div class="cards">
+
+
+<div class="card metric">
+
+<span>
+Animais
+</span>
+
+<b id="n">
+0
+</b>
+
+</div>
+
+
+<div class="card metric">
+
+<span>
+Currais
+</span>
+
+<b id="c">
+0
+</b>
+
+</div>
+
+
+<div class="card metric">
+
+<span>
+Peso médio geral
+</span>
+
+<b id="avg">
+0 kg
+</b>
+
+</div>
+
+
+<div class="card metric">
+
+<span>
+Peso total geral
+</span>
+
+<b id="sum">
+0 kg
+</b>
+
+</div>
+
+
+</div>
+
+
+
+<div class="grid">
+
+
+<!-- AÇÕES -->
+
+<div class="card">
+
+<h2>
+Ações rápidas
+</h2>
+
+
+<div class="actions">
+
+
+<button
+    class="action"
+    onclick="tab('animals')"
+>
+🐄 Cadastrar animal
+</button>
+
+
+<button
+    class="action"
+    onclick="tab('move')"
+>
+↔️ Mover animal
+</button>
+
+
+<button
+    class="action"
+    onclick="tab('weigh')"
+>
+⚖️ Nova pesagem
+</button>
+
+
+<button
+    class="action"
+    onclick="tab('pens')"
+>
+🏚️ Ver currais
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<!-- RESUMO -->
+
+<div class="card">
+
+<h2>
+Resumo dos currais
+</h2>
+
+<div id="summary"></div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CADASTRO DE ANIMAIS
+===================================================== -->
+
+<section
+    id="animals"
+    class="hidden"
+>
+
+
+<div class="card">
+
+
+<h2>
+🐄 Cadastro de animais
+</h2>
+
+
+<form
+    class="form"
+    onsubmit="addAnimal(event)"
+>
+
+
+<div class="row">
+
+
+<input
+    id="tag"
+    placeholder="Número do brinco"
+    required
+>
+
+
+<input
+    id="weight"
+    type="number"
+    step=".1"
+    min="0"
+    placeholder="Peso (kg)"
+    required
+>
+
+
+</div>
+
+
+<div class="row">
+
+
+<select id="pen"></select>
+
+
+<select id="cat">
+
+
+<option>
+Boi
+</option>
+
+
+<option>
+Vaca
+</option>
+
+
+<option>
+Novilho
+</option>
+
+
+<option>
+Novilha
+</option>
+
+
+<option>
+Bezerro
+</option>
+
+
+<option>
+Bezerra
+</option>
+
+
+</select>
+
+
+</div>
+
+
+<button
+    class="btn"
+>
+CADASTRAR ANIMAL
+</button>
+
+
+</form>
+
+
+<hr>
+
+
+<input
+    id="search"
+    placeholder="🔎 Pesquisar por brinco"
+    oninput="renderAnimals()"
+>
+
+
+<div id="animalList"></div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MOVIMENTAÇÃO
+===================================================== -->
+
+<section
+    id="move"
+    class="hidden"
+>
+
+
+<div class="card">
+
+
+<h2>
+↔️ Mover animal de curral
+</h2>
+
+
+<form
+    class="form"
+    onsubmit="moveAnimal(event)"
+>
+
+
+<input
+    id="mtag"
+    placeholder="Número do brinco"
+    required
+>
+
+
+<select id="to"></select>
+
+
+<button
+    class="btn"
+>
+CONFIRMAR MOVIMENTAÇÃO
+</button>
+
+
+</form>
+
+
+<p id="moveMsg"></p>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PESAGEM
+===================================================== -->
+
+<section
+    id="weigh"
+    class="hidden"
+>
+
+
+<div class="card">
+
+
+<h2>
+⚖️ Nova pesagem
+</h2>
+
+
+<form
+    class="form"
+    onsubmit="weighAnimal(event)"
+>
+
+
+<input
+    id="wtag"
+    placeholder="Número do brinco"
+    required
+>
+
+
+<input
+    id="ww"
+    type="number"
+    step=".1"
+    min="0"
+    placeholder="Novo peso (kg)"
+    required
+>
+
+
+<button
+    class="btn"
+>
+REGISTRAR PESAGEM
+</button>
+
+
+</form>
+
+
+<p id="weighMsg"></p>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     LISTA DE CURRAIS
+===================================================== -->
+
+<section
+    id="pens"
+    class="hidden"
+>
+
+<div id="penList"></div>
+
+</section>
+
+
+
+<!-- =====================================================
+     DENTRO DO CURRAL
+===================================================== -->
+
+<section
+    id="penDetail"
+    class="hidden"
+>
+
+
+<button
+    class="back"
+    onclick="showPens()"
+>
+← Voltar para currais
+</button>
+
+
+<div
+    id="penDetailContent"
+></div>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     MENU INFERIOR
+===================================================== -->
+
+<nav class="bottom">
+
+
+<button
+    onclick="tab('dash')"
+>
+🏠 Início
+</button>
+
+
+<button
+    onclick="tab('animals')"
+>
+🐄 Animais
+</button>
+
+
+<button
+    onclick="tab('move')"
+>
+↔️ Mover
+</button>
+
+
+<button
+    onclick="tab('weigh')"
+>
+⚖️ Peso
+</button>
+
+
+<button
+    onclick="tab('pens')"
+>
+🏚️ Currais
+</button>
+
+
+</nav>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =========================
+   BANCO DE DADOS LOCAL
+========================= */
+
+
+let A =
+    JSON.parse(
+        localStorage.mgA ||
+        '[]'
+    );
+
+
+let P =
+    JSON.parse(
+        localStorage.mgP ||
+        '["Curral 01","Curral 02","Curral 03"]'
+    );
+
+
+let CP =
+    JSON.parse(
+        localStorage.mgCP ||
+        '{}'
+    );
+
+
+let currentPen =
+    null;
+
+
+
+/* =========================
+   SALVAR
+========================= */
+
+
+function save(){
+
+    localStorage.mgA =
+        JSON.stringify(A);
+
+    localStorage.mgP =
+        JSON.stringify(P);
+
+    localStorage.mgCP =
+        JSON.stringify(CP);
+
+    render();
+
+}
+
+
+
+/* =========================
+   LOGIN
+========================= */
+
+
+function toggleAuth(){
+
+    document
+        .getElementById("login")
+        .classList
+        .toggle("hidden");
+
+
+    document
+        .getElementById("register")
+        .classList
+        .toggle("hidden");
+
+}
+
+
+
+function register(){
+
+    if(
+        !rn.value ||
+        !ru.value ||
+        !rp.value
+    ){
+
+        alert(
+            "Preencha os campos obrigatórios."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        rp.value !== rp2.value
+    ){
+
+        alert(
+            "As senhas não conferem."
+        );
+
+        return;
+
+    }
+
+
+    localStorage.mgUser =
+        JSON.stringify({
+
+            n:rn.value,
+
+            u:ru.value,
+
+            e:re.value,
+
+            p:rp.value
+
+        });
+
+
+    alert(
+        "Cadastro realizado com sucesso!"
+    );
+
+
+    toggleAuth();
+
+}
+
+
+
+function login(){
+
+    let x =
+        JSON.parse(
+            localStorage.mgUser ||
+            "null"
+        );
+
+
+    if(!x){
+
+        alert(
+            "Faça o cadastro primeiro."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        lu.value === x.u &&
+        lp.value === x.p
+    ){
+
+        localStorage.mgLogin =
+            "1";
+
+        start();
+
+    }
+
+    else{
+
+        alert(
+            "Usuário ou senha incorretos."
+        );
+
+    }
+
+}
+
+
+
+/* =========================
+   INICIAR
+========================= */
+
+
+function start(){
+
+    document
+        .getElementById("auth")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("app")
+        .classList
+        .remove("hidden");
+
+
+    let x =
+        JSON.parse(
+            localStorage.mgUser ||
+            "{}"
+        );
+
+
+    document
+        .getElementById("hello")
+        .textContent =
+        "Olá, " +
+        (x.n || "usuário");
+
+
+    render();
+
+}
+
+
+
+/* =========================
+   NAVEGAÇÃO
+========================= */
+
+
+function tab(id){
+
+    let telas = [
+
+        "dash",
+
+        "animals",
+
+        "move",
+
+        "weigh",
+
+        "pens",
+
+        "penDetail"
+
+    ];
+
+
+    telas.forEach(
+
+        function(x){
+
+            document
+                .getElementById(x)
+                .classList
+                .add("hidden");
+
+        }
+
+    );
+
+
+    document
+        .getElementById(id)
+        .classList
+        .remove("hidden");
+
+
+    if(
+        id === "pens"
+    ){
+
+        renderPens();
+
+    }
+
+
+    render();
+
+}
+
+
+
+/* =========================
+   SELECT DOS CURRAIS
+========================= */
+
+
+function options(id){
+
+    document
+        .getElementById(id)
+        .innerHTML =
+
+        P.map(
+
+            function(x){
+
+                return (
+
+                    "<option value='" +
+                    escAttr(x) +
+                    "'>" +
+
+                    esc(x) +
+
+                    "</option>"
+
+                );
+
+            }
+
+        ).join("");
+
+}
+
+
+
+/* =========================
+   CADASTRAR ANIMAL
+========================= */
+
+
+function addAnimal(e){
+
+    e.preventDefault();
+
+
+    let brinco =
+        tag.value.trim();
+
+
+    if(
+        A.some(
+            x =>
+            x.tag === brinco
+        )
+    ){
+
+        alert(
+            "Esse brinco já está cadastrado."
+        );
+
+        return;
+
+    }
+
+
+    let peso =
+        Number(
+            weight.value
+        );
+
+
+    A.push({
+
+        tag:brinco,
+
+        w:peso,
+
+        p:pen.value,
+
+        cat:cat.value,
+
+        h:[
+
+            {
+
+                w:peso,
+
+                d:
+                new Date()
+                .toLocaleString(
+                    "pt-BR"
+                )
+
+            }
+
+        ],
+
+        m:[]
+
+    });
+
+
+    save();
+
+
+    e.target.reset();
+
+
+    alert(
+        "Animal cadastrado com sucesso!"
+    );
+
+}
+
+
+
+/* =========================
+   MOVER ANIMAL
+========================= */
+
+
+function moveAnimal(e){
+
+    e.preventDefault();
+
+
+    let x =
+        A.find(
+
+            a =>
+            a.tag ===
+            mtag.value.trim()
+
+        );
+
+
+    if(!x){
+
+        moveMsg.textContent =
+            "Animal não encontrado.";
+
+        return;
+
+    }
+
+
+    if(
+        x.p === to.value
+    ){
+
+        moveMsg.textContent =
+            "O animal já está neste curral.";
+
+        return;
+
+    }
+
+
+    let antigo =
+        x.p;
+
+
+    x.p =
+        to.value;
+
+
+    x.m.push({
+
+        from:antigo,
+
+        to:x.p,
+
+        d:
+        new Date()
+        .toLocaleString(
+            "pt-BR"
+        )
+
+    });
+
+
+    save();
+
+
+    moveMsg.textContent =
+
+        "Animal " +
+        x.tag +
+        " movido de " +
+        antigo +
+        " para " +
+        x.p +
+        ".";
+
+}
+
+
+
+/* =========================
+   NOVA PESAGEM
+========================= */
+
+
+function weighAnimal(e){
+
+    e.preventDefault();
+
+
+    let x =
+        A.find(
+
+            a =>
+            a.tag ===
+            wtag.value.trim()
+
+        );
+
+
+    if(!x){
+
+        weighMsg.textContent =
+            "Animal não encontrado.";
+
+        return;
+
+    }
+
+
+    let novo =
+        Number(
+            ww.value
+        );
+
+
+    x.w =
+        novo;
+
+
+    x.h.push({
+
+        w:novo,
+
+        d:
+        new Date()
+        .toLocaleString(
+            "pt-BR"
+        )
+
+    });
+
+
+    save();
+
+
+    weighMsg.textContent =
+
+        "Nova pesagem registrada: " +
+        novo +
+        " kg.";
+
+
+    if(
+        currentPen === x.p
+    ){
+
+        renderPenDetail(
+            currentPen
+        );
+
+    }
+
+}
+
+
+
+/* =========================
+   RENDERIZAÇÃO GERAL
+========================= */
+
+
+function render(){
+
+    options("pen");
+
+    options("to");
+
+
+    let total =
+        A.length;
+
+
+    let pesoTotal =
+        A.reduce(
+
+            function(
+                soma,
+                animal
+            ){
+
+                return (
+
+                    soma +
+                    Number(
+                        animal.w ||
+                        0
+                    )
+
+                );
+
+            },
+
+            0
+
+        );
+
+
+    let pesoMedio =
+        total
+        ?
+        pesoTotal / total
+        :
+        0;
+
+
+    document
+        .getElementById("n")
+        .textContent =
+        total;
+
+
+    document
+        .getElementById("c")
+        .textContent =
+        P.length;
+
+
+    document
+        .getElementById("avg")
+        .textContent =
+        pesoMedio.toFixed(1) +
+        " kg";
+
+
+    document
+        .getElementById("sum")
+        .textContent =
+        pesoTotal.toFixed(1) +
+        " kg";
+
+
+    document
+        .getElementById("summary")
+        .innerHTML =
+
+        P.map(
+
+            function(p){
+
+                let animais =
+                    A.filter(
+                        x =>
+                        x.p === p
+                    );
+
+
+                return `
+
+                <div
+                    style="
+                    display:flex;
+                    justify-content:
+                    space-between;
+                    padding:9px;
+                    border-bottom:
+                    1px solid #eee;
+                    cursor:pointer;
+                    "
+                    onclick='openPen(${JSON.stringify(p)})'
+                >
+
+                    <span>
+                        🏚️ ${esc(p)}
+                    </span>
+
+                    <b>
+                        ${animais.length}
+                        animais
+                    </b>
+
+                </div>
+
+                `
